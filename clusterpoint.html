@@ -1,0 +1,180 @@
+<!--
+  Copyright 2014 IBM Corp.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- clusterpoint html file that corresponds to the 99-clusterpoint.js file              -->
+<!-- This creates and configures the onscreen elements of the node           -->
+
+<!-- If you use this as a template, update the copyright with your own name. -->
+
+<!-- First, the content of the edit dialog is defined.                       -->
+
+<script type="text/x-red" data-template-name="clusterpoint">
+
+    <div class="form-row">
+        <label for="node-input-cspDatabase" style="width: 110px;"><i class="fa fa-database"></i> Clusterpoint</label>
+        <input type="text" id="node-input-cspDatabase">
+    </div>
+
+    <br/>
+
+    <div class="form-row">
+        <label for="node-input-request"><i class="fa fa-envelope"></i> Request</label>
+        <select id="node-input-request" style="width:125px">
+          <option value="INS">Insert</option>
+          <option value="UPD">Update</option>
+          <option value="REPL">Replace</option>
+          <option value="PARTREPL">Partial Replace</option>
+          <option value="DEL">Delete</option>
+          <option value="SERC">Search</option>
+          <option value="LKUP">Lookup</option>
+          <option value="RETRV">Retrive</option>
+          <option value="LSLAST">List Last</option>
+          <option value="LSPATHS">List Paths</option>
+          <option value="STATUS">Status</option>
+          <option value="CLEAR">Clear</option>
+          <option value="REINDEX">Reindex</option>
+        </select>
+    </div>
+
+    <br/>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="clusterpoint">
+   <p>Allows basic access to clusterpoint node</p>
+   <p><b>msg.payload</b>. msg.payload is an array of json objects and must hold the attributes you wanna query.</p>
+   <p>Only for <b>Search</b> if you add <b>msg.ordering="asc"</b> this will order the output. </p>
+</script>
+
+<!-- Finally, the node type is registered along with all of its properties   -->
+<!-- The example below shows a small subset of the properties that can be set-->
+<script type="text/javascript">
+    RED.nodes.registerType('clusterpoint',{
+        category: 'storage-input',      // the palette category
+        color:"#6e80ec",
+        defaults: {             // defines the editable properties of the node
+            name: {value:""},   //  along with default values.
+            topic: {value:""},
+            request: {value:"INS", required:true},
+            cspDatabase: {type:"cspDatabase",required:true}
+        },
+        inputs:1,               // set the number of inputs - only 0 or 1
+        outputs:1,              // set the number of outputs - 0 to n
+        // set the icon (held in icons dir below where you save the node)
+        icon: "myicon.png",     // saved in  icons/myicon.png
+        label: function() {     // sets the default label contents
+            return this.name||this.topic||"clusterpoint";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-red" data-template-name="cspDatabase">
+    <div class="form-row">
+        <label for="node-config-input-tcp"><i class="fa fa-globe"></i>tcp</label>
+        <input type="text" id="node-config-input-tcp" placeholder="tcp://cloud-eu-0.clusterpoint.com">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="fa fa-random"></i> Port</label>
+        <input type="text" id="node-config-input-port" placeholder="9007">
+    </div>
+        <div class="form-row">
+        <label for="node-config-input-user"><i class="fa fa-user"></i> Username</label>
+        <input type="text" id="node-config-input-user" placeholder="JoeDemo@mail.com">
+    </div>
+        <div class="form-row">
+        <label for="node-config-input-pass"><i class="fa fa-lock"></i> Password</label>
+        <input type="password" id="node-config-input-pass" placeholder="mySecret">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-db"><i class="fa fa-database"></i> Database</label>
+        <input type="text" id="node-config-input-db" placeholder="myDatabase">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-account"><i class="fa"></i> Account</label>
+        <input type="text" id="node-config-input-account" placeholder="123">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-document"><i class="fa"></i> Document</label>
+        <input type="text" id="node-config-input-document" placeholder="document">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-documentId"><i class="fa"></i> DocumentId</label>
+        <input type="text" id="node-config-input-documentId" placeholder="document/id">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('cspDatabase',{
+        category: 'config',
+        defaults: {
+            tcp: {value:"tcp://cloud-eu-0.clusterpoint.com",required:true},
+            port: {value:"9007",required:true},
+            user: {value:"",required:true},
+            pass: {value:"",required:true},
+            db: {value:"",required:true},
+            account: {value:"",required:true},
+            document: {value:"document",required:true},
+            documentId: {value:"document/id",required:true},
+            name: {}
+        },
+        label: function() {
+            return (this.name);
+        },
+        oneditprepare: function() {
+        },
+        oneditsave: function() {
+        },
+        ondelete: function() {
+          $.ajax({
+                url: 'cspDatabase/'+this.id,
+                type: 'DELETE',
+                success: function(result) {}
+            });
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
