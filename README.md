@@ -3,13 +3,13 @@ A node for nodered with basics operations for clusterpoint.
 
 Place this node under nodes folder fo your node-red. 
 
-Some screenshots of how it lookes like: 
+Some screenshots of how it looks like: 
 
-![](https://github.com/linnal/node-red-clusterpoint/blob/master/images/c.png =200x100)
+![Alt text](https://github.com/linnal/node-red-clusterpoint/blob/master/images/c.png?raw=true)
 
-![](https://github.com/linnal/node-red-clusterpoint/blob/master/images/a.png =400x200)
+![](https://github.com/linnal/node-red-clusterpoint/blob/master/images/a.png?raw=true =400x200)
 
-![](https://github.com/linnal/node-red-clusterpoint/blob/master/images/b.png =400x400)
+![](https://github.com/linnal/node-red-clusterpoint/blob/master/images/b.png?raw=true =400x400)
 
 [Here](http://docs.clusterpoint.com/examples/#/Node.js/connection) you can find the implemented functions. 
 
